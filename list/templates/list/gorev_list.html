@@ -2,21 +2,72 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>Görev Listesi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Görev Listesi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+    .status {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .actions a {
+      margin-left: 10px;
+      text-decoration: none;
+      color: #007bff;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <h1>Görev Listesi</h1>
+    <a href="{% url 'gorev_ekle' %}">➕ Yeni Görev Ekle</a>
     <ul>
-        {% for gorev in gorevler %}
-            <li>
-                <strong>{{ gorev.baslik }}</strong> - 
-                {% if gorev.tamamlandi %}✔ Tamamlandı{% else %}⏳ Devam Ediyor{% endif %}
-            </li>
-        {% empty %}
-            <li>Henüz görev yok.</li>
-        {% endfor %}
+      {% for gorev in gorevler %}
+        <li>
+          <div>
+            <strong>{{ gorev.baslik }}</strong><br>
+            <span class="status">
+              {% if gorev.tamamlandi %}✔ Tamamlandı{% else %}⏳ Devam Ediyor{% endif %}
+            </span>
+          </div>
+          <div class="actions">
+            <a href="{% url 'gorev_guncelle' gorev.pk %}">✏️</a>
+            <a href="{% url 'gorev_sil' gorev.pk %}">🗑️</a>
+          </div>
+        </li>
+      {% empty %}
+        <li>Henüz görev yok.</li>
+      {% endfor %}
     </ul>
-    <a href="{% url 'gorev_ekle' %}">Yeni Görev Ekle</a>
+  </div>
 </body>
 </html>
+
