@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Görev Formu</title>
-</head>
-<body>
-    <h1>Görev Ekle / Güncelle</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Kaydet</button>
-    </form>
-    <a href="{% url 'gorev_list' %}">← Geri Dön</a>
-</body>
-</html>
+{% extends 'list/base.html' %}
+
+{% block title %}Görev Formu{% endblock %}
+
+{% block content %}
+<h2>Görev Ekle / Güncelle</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Kaydet</button>
+</form>
+{% endblock %}
