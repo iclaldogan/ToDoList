@@ -1,0 +1,22 @@
+<!-- list/templates/list/gorev_list.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Görev Listesi</title>
+</head>
+<body>
+    <h1>Görev Listesi</h1>
+    <ul>
+        {% for gorev in gorevler %}
+            <li>
+                <strong>{{ gorev.baslik }}</strong> - 
+                {% if gorev.tamamlandi %}✔ Tamamlandı{% else %}⏳ Devam Ediyor{% endif %}
+            </li>
+        {% empty %}
+            <li>Henüz görev yok.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'gorev_ekle' %}">Yeni Görev Ekle</a>
+</body>
+</html>

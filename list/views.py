@@ -1,35 +1,35 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Task
-from .forms import TaskForm
+from .models import Gorev
+from .forms import GorevForm
 
-def task_list(request):
-    tasks = Task.objects.all().order_by('-created_at')
-    return render(request, 'list/task_list.html', {'tasks': tasks})
+def gorev_list(request):
+    gorevler = Gorev.objects.all().order_by('-olusturulma_tarihi')
+    return render(request, 'list/gorev_list.html', {'gorevler': gorevler})
 
-def task_create(request):
+def gorev_ekle(request):
     if request.method == 'POST':
-        form = TaskForm(request.POST)
+        form = GorevForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('task_list')
+            return redirect('gorev_list')
     else:
-        form = TaskForm()
-    return render(request, 'list/task_form.html', {'form': form})
+        form = GorevForm()
+    return render(request, 'list/gorev_form.html', {'form': form})
 
-def task_update(request, pk):
-    task = get_object_or_404(Task, pk=pk)
+def gorev_guncelle(request, pk):
+    gorev = get_object_or_404(Gorev, pk=pk)
     if request.method == 'POST':
-        form = TaskForm(request.POST, instance=task)
+        form = GorevForm(request.POST, instance=gorev)
         if form.is_valid():
             form.save()
-            return redirect('task_list')
+            return redirect('gorev_list')
     else:
-        form = TaskForm(instance=task)
-    return render(request, 'list/task_form.html', {'form': form})
+        form = GorevForm(instance=gorev)
+    return render(request, 'list/gorev_form.html', {'form': form})
 
-def task_delete(request, pk):
-    task = get_object_or_404(Task, pk=pk)
+def gorev_sil(request, pk):
+    gorev = get_object_or_404(Gorev, pk=pk)
     if request.method == 'POST':
-        task.delete()
-        return redirect('task_list')
-    return render(request, 'list/task_confirm_delete.html', {'task': task})
+        gorev.delete()
+        return redirect('gorev_list')
+    return render(request, 'list/gorev_sil.html', {'gorev': gorev})
